@@ -1,0 +1,23 @@
+/* Konteiner pro celou sekci main v body */
+.my-container-main {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* Kontejner pro detail instance */
+.my-container-detail {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Zbarvení odkazujícího řádku při najetí myši nebo kliknutí */
+.my-row-link {
+    display: block;
+    padding: 5px 0;
+    transition: background-color 0.3s ease;
+}
+
+.my-row-link:hover, .my-row-link:active {
+    background-color: #f0f0f0;
+}
+

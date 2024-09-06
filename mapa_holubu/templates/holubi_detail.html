@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %} DETAIL INCIDENTU {% endblock %}
+
+{% block main %}
+<div class="my-container-detail">
+    <div class="row ">
+        <div class="col fs-3 text-center my-4">
+            DETAIL INCIDENTU
+        </div>
+    </div>
+
+    
+    <div class="row mt-2 ">
+        <div class="col-12 col-md-3 fw-bolder">
+            JMÉNO HOLUBA:
+        </div>
+        <div class="col">
+            {{ object.jmeno }}
+        </div>
+    </div>
+
+    <div class="row mt-2 ">
+        <div class="col-12 col-md-3 fw-bolder">
+            DATUM NÁLEZU:
+        </div>
+        <div class="col">
+            {{ object.datum }}
+        </div>
+    </div>
+
+    <div class="row mt-2 ">
+        <div class="col-12 col-md-3 fw-bolder">
+            MÍSTO:
+        </div>
+        <div class="col">
+            {{ object.adresa }}
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12 fw-bolder">
+            POPIS:
+        </div>
+        <div class="row mt-2">
+            <p class="">
+            {{ object.popis }}
+        </p>
+        </div>
+    </div>       
+
+    <div class="row d-flex justify-content-center my-5">
+        <div class="col-12 col-md-4 p-2 text-center">
+            <a href="{% url 'holuby-list' %}" class="btn btn-secondary btn-sm px-4">SEZNAM&nbsp;VŠECH&nbsp;ÚTOKŮ</a>
+        </div>
+        <div class="col-12 col-md-4 p-2 text-center">
+            <a href="{% url 'index' %}" class="btn btn-secondary btn-sm px-4">NA&nbsp;ÚVODNÍ&nbsp;STRÁNKU</a>
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

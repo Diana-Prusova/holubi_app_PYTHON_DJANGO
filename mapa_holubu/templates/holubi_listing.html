@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %} ÚTOKY NA HOLUBY | SEZNAM {% endblock %}
+
+{% block main %}
+    <div class="row ">
+        <div class="col fs-3 text-center">
+            SEZNAM ZAZNAMENANÝCH ÚTOKŮ
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row fw-bolder mb-3">
+        <div class="col d-none d-sm-inline">
+            JMÉNO:
+        </div>
+        <div class="col d-none d-sm-inline">
+            DATUM:
+        </div>
+        <div class="col d-none d-sm-inline">
+            ADRESA:
+        </div>
+    </div>
+
+    {% if object_list %}
+        {% for each in object_list %}
+        <a href="{% url 'detail' each.id %}" class="text-decoration-none text-dark my-row-link">
+            <div class="row">
+                <div class="col d-none d-sm-inline">
+                    {{each.jmeno}}
+                </div>
+                <div class="col d-none d-sm-inline">
+                    {{each.datum}}
+                </div>
+                <div class="col">
+                    {{each.adresa}}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    {% endif %}
+
+    <hr>
+
+{% endblock %}
