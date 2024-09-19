@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title %} STŘELBA NA HOLUBY | FILTR{% endblock %}
+
+{% block main %}
+<div class="p-4 my-border mb-4">
+    <form method="get">
+        <div class="bg-light p-4 mb-4">
+            <div class="fs-4">
+                <b>FILTRACE ZÁZNAMŮ</b>
+            </div>
+    
+            <div class="row mt-4">
+                <div class="col form-group my-col-size">
+                    <label for="{{ filter.form.datum_od.id_for_label }}" class="form-label">
+                        {{ filter.form.datum_od.label }}
+                    </label>
+                    {{ filter.form.datum_od }}
+                </div>
+                <div class="col form-group my-col-size">
+                    <label for="{{ filter.form.datum_do.id_for_label }}" class="form-label">
+                        {{ filter.form.datum_do.label }}
+                    </label>
+                    {{ filter.form.datum_do }}
+                </div>
+    
+                <div class="col form-group my-col-size">
+                    <label for="{{ filter.form.adresa.id_for_label }}" class="form-label">
+                        {{ filter.form.adresa.label }}
+                    </label>
+                    {{ filter.form.adresa }}
+                </div>
+    
+                <div class="col form-group my-col-size">
+                    <label for="{{ filter.form.potvrzena_streba.id_for_label }}" class="form-label">
+                        {{ filter.form.potvrzena_streba.label }}
+                    </label>
+                    {{ filter.form.potvrzena_streba }}
+                </div>
+    
+                <div class="col form-group my-col-size">
+                    <label for="{{ filter.form.prezil.id_for_label }}" class="form-label">
+                        {{ filter.form.prezil.label }}
+                    </label>
+                    {{ filter.form.prezil }}
+                </div>
+            </div>
+                
+            <div class="row mt-5">
+                <div class="col mb-3 d-flex align-items-end">
+                    <button type="submit" class="my-btn">FILTROVAT</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="p-1">
+
+        <div class="mb-1">
+            <div class="fs-4">
+                POČET NALEZENÝCH ZÁZNAMŮ: {{ holubi|length }}
+            </div>
+            <small>z celkového počtu {{ holubi_count }} záznamů v databázi</small>
+        </div>
+
+        {% for holub in holubi %}
+            <a href="{% url 'detail' holub.id %}" class="text-decoration-none text-dark my-row-link px-3">
+                <div class="row">
+                    <div class="col d-none d-sm-inline">
+                        {{holub.jmeno}}
+                    </div>
+                    <div class="col d-none d-sm-inline">
+                        {{holub.datum}}
+                    </div>
+                    <div class="col">
+                        {{holub.adresa}}
+                    </div>
+                </div>
+            </a>
+        {% empty %}
+            <div class="p-3 fs-5">
+                <b>Nebyly nalezeny žádné výsledky.</b>
+            </div>
+            
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+{% endblock %}

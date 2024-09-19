@@ -16,14 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from django.conf import settings
+from django.conf.urls.static import static
 from mapa_holubu import views
+from api.views import HolubiListAPIView
 
 urlpatterns = [
     # ADMIN ROZHRANÍ
     path('admin/', admin.site.urls),
     # APP MAPA
     path('', views.HolubiAppIndexView.as_view(), name='index'),
-    path('seznam_holubu/', views.HolubiListView.as_view(), name='holuby-list'),
-    path('detail_incicentu/<int:pk>/', views.HolubiDetailView.as_view(), name='detail'),
+    path('seznam-holubu/', views.HolubiListView.as_view(), name='holubi-list'),
+    path('detail-incicentu/<int:pk>/', views.HolubiDetailView.as_view(), name='detail'),
+    path('holubi-filtr/', views.HolubiFilteredListView.as_view(), name='holubi-filtr'),
+    # API - REST FRAME
+    path('api/', HolubiListAPIView.as_view(), name='holubi-api'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

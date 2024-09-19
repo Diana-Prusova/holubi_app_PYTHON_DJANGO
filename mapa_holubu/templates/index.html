@@ -7,128 +7,173 @@
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 {% endblock %}
 
-{% block title %} ÚTOKY NA HOLUBY | MAPA {% endblock %}
+{% block title %} STŘELBA NA HOLUBY | MAPA {% endblock %}
 
 {% block main %}
-    <!-- <div class="row mt-3 mb-3">
-        <h1 class="fw-light text-center mt-3 mb-3">ZAZNAMENANÉ INCIDENTY STŘELBY NA HOLUBY</h1>
-    </div> -->
-
-    <div class="row d-flex justify-content-between mb-4">
-        <div class="col-auto d-flex p-0">
-            <h1 class="fw-light d-flex align-items-center m-0">ZAZNAMENANÉ INCIDENTY STŘELBY NA HOLUBY</h1>
-        </div>
-    
-        <div class="col d-flex justify-content-start justify-content-sm-end p-2">
-            <a class="btn btn-secondary d-flex align-items-center px-4 m-0" href="{% url 'holuby-list' %}">SEZNAM&nbsp;VŠECH&nbsp;ÚTOKŮ</a>
-        </div>
-    </div>
+    <p class="pt-2 px-2 mb-0 text-secondary" style="text-align: justify;">
+        V mnoha městech ještě stále přetrvává zvyk střílet holuby 
+        vzduchovkou. Tato nelegální "zábava" představuje vážný problém jak pro 
+        bezpečnost ptactva, tak i pro bezpečnost lidí. Proto jsme se 
+        rozhodli začít incidenty monitorovat. Abychom identifikovali 
+        nejnebezpečnější lokality a zároveň ukázali, jak často k útokům dochází.
+    </p>
     
     <!-- MAPA -->
-    <div class="row d-flex justify-content-center ">
-        <div id="map" style="height: 600px;" ></div>
+    <div class="row d-flex justify-content-center px-3 my-2">
+        <div id="map" style="height: 400px;" ></div>
     </div>
-
+    <div class="row text-center mb-3 text-secondary">
+        <p class="mb-0">Víte o nějakém útoku, který v databázi chybí? Využijte prosím náš
+            <a href="https://www.holubivnouzi.cz/kontakt/" target="_blank">kontaktní formulář</a>
+            .
+        </p>
+    </div>
+    
     <!-- převedení dat do JSON -->
     {{ data|json_script:"data_json" }}
 
+    <!-- Celková data -->
+    <div class="p-4 my-border mb-4">
+        <div class="col fs-4 mt-2 mb-3 text-center">
+            <b>CELKOVÁ DATA</b>
+        </div>
+    
+        <div class="row">
+            <div class="col-12 col-md-4 mb-3">
+                <div class="bg-light p-4 text-center rounded">
+                    <h5>Hlášených útoků:</h5>
+                    <div class="display-4">{{ holubi_count }}</div>
+                    <small>počet nám nahlášených útoků</small>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="bg-light p-4 text-center rounded">
+                    <h5>Potvrzená střelba:</h5>
+                    <div class="display-4">{{ potvrzene_streby_procenta }} %</div>
+                    <small>celkový počet: {{ potvrzene_streby_count }}</small>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="bg-light p-4 text-center rounded">
+                    <h5>Přeživší holoubci:</h5>
+                    <div class="display-4">{{ prezivsi_procenta }} %</div>
+                    <small>celkový počet: {{ prezivsi_count }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FAQ -->
-    <div class="row text-center ">
-        <div class="col fs-3 mt-5 mb-3">
-            ČASTO KLADENÉ OTÁZKY
+    <div class="my-border p-4 mb-5" id="faq">
+        <div class="row text-center ">
+            <div class="col fs-4 mt-2 mb-3">
+                <b>ČASTO KLADENÉ OTÁZKY</b>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="fw-bolder fs-5 py-2 px-4 my-row-link" data-bs-toggle="collapse" href="#collapseVzduchovka" role="button" 
-        aria-expanded="false" aria-controls="collapseVzduchovka">
-            <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>&nbsp;&nbsp;Je střelba vzduchovkou v obci legální?
+        <div class="row">
+            <div class="fw-bolder py-2 px-4 my-row-link" 
+            data-bs-toggle="collapse" href="#collapseVzduchovka" role="button" 
+            aria-expanded="false" aria-controls="collapseVzduchovka">
+                <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>
+                &nbsp;&nbsp;Je střelba vzduchovkou v obci legální?
+            </div>
         </div>
-    </div>
-    <div class="collapse" id="collapseVzduchovka">
-        <div class="card-body">
-            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        <div class="collapse" id="collapseVzduchovka">
+            <div class="card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
         </div>
-    </div>
-    
-    <hr>
-    
-    <div class="row">
-        <div class="fw-bolder fs-5 py-2 px-4 my-row-link" data-bs-toggle="collapse" href="#collapseLoveckyListek" role="button" 
-        aria-expanded="false" aria-controls="collapseLoveckyListek">
-            <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>&nbsp;&nbsp;Lovecký lístek
+        
+        <hr>
+        
+        <div class="row">
+            <div class="fw-bolder py-2 px-4 my-row-link" 
+            data-bs-toggle="collapse" href="#collapseLoveckyListek" role="button" 
+            aria-expanded="false" aria-controls="collapseLoveckyListek">
+                <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>
+                &nbsp;&nbsp;Oprvňuje člověka ke střelbě na holubi v obci lovecký lístek?
+            </div>
         </div>
-    </div>
-    <div class="collapse" id="collapseLoveckyListek">
-        <div class="card-body">
-            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        <div class="collapse" id="collapseLoveckyListek">
+            <div class="card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
         </div>
-    </div>
-    
-    <hr>
-    
-    <div class="row">
-        <div class="fw-bolder fs-5 py-2 px-4 my-row-link" data-bs-toggle="collapse" href="#collapseUblizeni" role="button" 
-        aria-expanded="false" aria-controls="collapseUblizeni">
-            <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>&nbsp;&nbsp;Je legální ublížit holubovi?
+        
+        <hr>
+        
+        <div class="row">
+            <div class="fw-bolder py-2 px-4 my-row-link" 
+            data-bs-toggle="collapse" href="#collapseUblizeni" role="button" 
+            aria-expanded="false" aria-controls="collapseUblizeni">
+                <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>
+                &nbsp;&nbsp;Jsou život a zdraví holubů chráněné zákonem?
+            </div>
         </div>
-    </div>
-    <div class="collapse" id="collapseUblizeni">
-        <div class="card-body">
-            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        <div class="collapse" id="collapseUblizeni">
+            <div class="card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
         </div>
-    </div>
-    
-    <hr>
-    
-    <div class="row">
-        <div class="fw-bolder fs-5 py-2 px-4 my-row-link" data-bs-toggle="collapse" href="#collapseNemoci" role="button" 
-        aria-expanded="false" aria-controls="collapseNemoci">
-            <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>&nbsp;&nbsp;Jsou holubi zdraví nebezpeční?
+        
+        <hr>
+        
+        <div class="row">
+            <div class="fw-bolder py-2 px-4 my-row-link" 
+            data-bs-toggle="collapse" href="#collapseNemoci" role="button" 
+            aria-expanded="false" aria-controls="collapseNemoci">
+                <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>
+                &nbsp;&nbsp;Jsou holubi skutečně tolik zdraví nebezpeční?
+            </div>
         </div>
-    </div>
-    <div class="collapse" id="collapseNemoci">
-        <div class="card-body">
-            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        <div class="collapse" id="collapseNemoci">
+            <div class="card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
         </div>
-    </div>
-    
-    <hr>
-    
-    <div class="row">
-        <div class="fw-bolder fs-5 py-2 px-4 my-row-link" data-bs-toggle="collapse" href="#collapseHolubniky" role="button" 
-        aria-expanded="false" aria-controls="collapseHolubniky">
-            <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>&nbsp;&nbsp;Jak je to s regulací holubů?
+        
+        <hr>
+        
+        <div class="row">
+            <div class="fw-bolder py-2 px-4 my-row-link" 
+            data-bs-toggle="collapse" href="#collapseHolubniky" role="button" 
+            aria-expanded="false" aria-controls="collapseHolubniky">
+                <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>
+                &nbsp;&nbsp;Je možné regulovat množství holubů eticky?
+            </div>
         </div>
-    </div>
-    <div class="collapse" id="collapseHolubniky">
-        <div class="card-body">
-            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        <div class="collapse" id="collapseHolubniky">
+            <div class="card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
         </div>
-    </div>
-    
-    <hr>
-    
-    <div class="row">
-        <div class="fw-bolder fs-5 py-2 px-4 my-row-link" data-bs-toggle="collapse" href="#collapseKlistaky" role="button" 
-        aria-expanded="false" aria-controls="collapseKlistaky">
-            <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>&nbsp;&nbsp;Jak je to s těmi klíšťáky?
+        
+        <hr>
+        
+        <div class="row">
+            <div class="fw-bolder py-2 px-4 my-row-link" 
+            data-bs-toggle="collapse" href="#collapseKlistaky" role="button" 
+            aria-expanded="false" aria-controls="collapseKlistaky">
+                <i class="bi bi-arrow-90deg-down" style="font-size: 15px;"></i>
+                &nbsp;&nbsp;Musíme se bát holubů kvůli klíšťákům?
+            </div>
         </div>
-    </div>
-    <div class="collapse" id="collapseKlistaky">
-        <div class="card-body">
-            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        <div class="collapse" id="collapseKlistaky">
+            <div class="card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
         </div>
-    </div>
-    
-    <hr>
-    
 
-    <div class="row my-5"></div>
+    </div>
+    
 {% endblock %}
 
 {% block script_end_page %}
     <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+    crossorigin=""></script>
+
     <script src="{% static 'holubi_app/js/map_for_app.js' %}"></script>
 {% endblock %}

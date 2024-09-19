@@ -1,6 +1,53 @@
+/* Kontejner pro navigaci */
+.my-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.my-navbar {
+    background-color: #393939; /* #393939; */
+    padding: 20px 0;
+    box-shadow: none
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        white-space: normal; 
+        text-align: center;
+        margin: 0 auto; 
+    }
+
+    .my-nav-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .navbar-toggler {
+        margin: 0 auto;
+    }
+
+    .navbar-nav {
+        justify-content: center; 
+        text-align: center;
+    }
+}
+
 /* Konteiner pro celou sekci main v body */
 .my-container-main {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -20,4 +67,57 @@
 .my-row-link:hover, .my-row-link:active {
     background-color: #f0f0f0;
 }
+
+/* Vlastní tlačítko */
+.my-btn {
+    background-color: #6d6c6c; 
+    color: white; 
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px; 
+    border: none; 
+    font-size: 16px; 
+    transition: transform 0.2s ease-in-out;
+    display: inline-block; 
+}
+
+.my-btn:hover, .my-btn:active {
+    transform: scale(1.05); 
+    color: white;
+}
+
+/* Rámování */
+.my-border {
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+}
+
+/* Velikost formulářového pole */
+.my-col-size {
+    min-width: 200px;
+    max-width: 250px;
+}
+
+/* Stylování patičky */
+.my-footer {
+    background-color: #393939;
+    color: white;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.my-footer a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: transform 0.2s ease-in-out;
+    margin: 5px 0;
+}
+
+.my-footer a:hover, .my-footer a:active {
+    transform: scale(1.05);
+}
+
+
+
 
