@@ -10,10 +10,9 @@
     margin-left: auto;
 }
 
-.my-navbar {
-    background-color: #393939; /* #393939; */
+.navbar.my-navbar {
+    background-color: #393939 !important;
     padding: 20px 0;
-    box-shadow: none
 }
 
 .navbar-brand {
