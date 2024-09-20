@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
+{% load static %}
 
 {% block title %} STŘELBA NA HOLUBY | DETAIL INCIDENTU {% endblock %}
 
@@ -13,8 +14,8 @@
 
     
     <div class="row mt-2 ">
-        <div class="col-12 col-md-3 fw-bolder">
-            JMÉNO HOLUBA:
+        <div class="col-12 col-md-4 fw-bolder">
+            JMÉNO HOLOUBKA:
         </div>
         <div class="col">
             {{ object.jmeno }}
@@ -22,7 +23,7 @@
     </div>
 
     <div class="row mt-2 ">
-        <div class="col-12 col-md-3 fw-bolder">
+        <div class="col-12 col-md-4 fw-bolder">
             DATUM NÁLEZU:
         </div>
         <div class="col">
@@ -31,11 +32,45 @@
     </div>
 
     <div class="row mt-2 ">
-        <div class="col-12 col-md-3 fw-bolder">
+        <div class="col-12 col-md-4 fw-bolder">
             MÍSTO:
         </div>
         <div class="col">
             {{ object.adresa }}
+        </div>
+    </div>
+
+    <div class="row mt-2 ">
+        <div class="col-12 col-md-4 fw-bolder">
+            PŘEŽIL:
+        </div>
+        <div class="col">
+            {% if object.prezil %}
+                ANO
+            {% else %}
+                NE
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mt-2 ">
+        <div class="col-12 col-md-4 fw-bolder">
+            POTVRZENÁ STŘELBA:
+        </div>
+        <div class="col">
+            {% if object.potvrzena_streba %}
+                ANO &nbsp;&nbsp;
+                <i class="bi bi-info-circle" data-bs-toggle="tooltip" 
+                   data-bs-placement="right" 
+                   title="Že se jená o střelné zranění bylo potvrzeno 
+                   odbornou osobou."></i>
+            {% else %}
+                NE &nbsp;&nbsp;
+                <i class="bi bi-info-circle" data-bs-toggle="tooltip" 
+                   data-bs-placement="right" 
+                   title="Vše nasvědčuje tomu, že se jednalo o střelné zranění, 
+                   ale situace neumožnila potvrzení od odborné osoby."></i>
+            {% endif %}
         </div>
     </div>
     
@@ -50,17 +85,38 @@
         </div>
     </div>       
 
-    <div class="row d-flex justify-content-center my-5">
-        <div class="col-12 col-md-4 p-2 text-center">
-            <a href="{% url 'holuby-list' %}" class="btn btn-secondary btn-sm px-4">SEZNAM&nbsp;VŠECH&nbsp;ÚTOKŮ</a>
+    <div class="row mt-4">
+        <div class="col-12 fw-bolder">
+            FOTOGRAFIE:
         </div>
-        <div class="col-12 col-md-4 p-2 text-center">
-            <a href="{% url 'index' %}" class="btn btn-secondary btn-sm px-4">NA&nbsp;ÚVODNÍ&nbsp;STRÁNKU</a>
+        <div class="row mt-2">
+            {% if object.images.all.count > 0 %}
+                <div class="d-flex flex-wrap justify-content-start">
+                    {% for img in object.images.all %}
+                        <div class="" style="width: 200px;">
+                            <a href="{{ img.image.url }}" data-lightbox="gallery" data-title="{{ img.description }}">
+                                <img src="{{ img.image.url }}" alt="{{ img.description }}" class="my-img-style">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>K tomuto incidentu nejsou fotografie k dispozici.</p>
+            {% endif %}
         </div>
     </div>
 
+    <div class="row d-flex justify-content-center my-5">
+        <div class="col-12 col-md-4 p-2 text-center">
+            <a href="javascript:window.history.back()" class="btn btn-secondary btn-sm px-4">
+                ZPĚT
+            </a>
+        </div>
+    </div>
 </div>
 
+{% endblock %}
 
-
+{% block script_end_page %}
+    <script src="{% static 'holubi_app/js/gallery.js' %}"></script>
 {% endblock %}

@@ -97,6 +97,22 @@
     max-width: 250px;
 }
 
+/* Stylování náhledu obrázků */
+.my-img-style {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    padding: 15px;
+    transition: transform 0.3s ease;
+}
+
+.my-img-style:hover {
+    transform: scale(1.05);
+}
+
+
 /* Stylování patičky */
 .my-footer {
     background-color: #393939;
